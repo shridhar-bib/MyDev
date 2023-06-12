@@ -1,0 +1,50 @@
+<aura:component controller = "DIA_DispatchPageController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!--Event handler for Add and Delete Row Event which is fire from Child Component -->  
+    
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRow_Event_Shipper" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRow_Event_Shipper" action="{!c.addNewRow}"/>
+    
+    <!--Aura Attribute for store Contact Object List as Array-->    
+    <aura:attribute name="shipperCodeList" type="Shipper_codes__c[]"/> 
+    <aura:attribute name="dispatchID" type ="String"/>
+    
+    <aura:handler name="change" value="{!v.dispatchID}" action="{!c.doInit}"/>
+    
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title">Shipper code details</h1>
+        
+    </div>
+    
+        
+ <!--Table Part-->           
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate">S.No</div>
+                </th>                
+                <th scope="col">
+                    <div class="slds-truncate" title="Description">Description</div>
+                </th>
+                
+                <th scope="col">
+                    <div class="slds-truncate" title="Shipper ID">Shipper ID</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="EIC Code">EIC Code</div>
+                </th>
+            </tr>
+        </thead>   
+        <tbody>
+                 
+            <aura:iteration items="{!v.shipperCodeList}" var="item" indexVar="index">
+                <c:DIA_ShipperCode_Child SC_Instance="{!item}" rowIndex="{!index}" />
+            </aura:iteration>
+        </tbody>        
+    </table>    
+    <div class="slds-clearfix slds-align_absolute-center" style="Padding:10px;width: 20%;">
+        <lightning:button variant="brand" label="Save Shipper code" onclick="{!c.Save}"/>
+    </div>
+</aura:component>

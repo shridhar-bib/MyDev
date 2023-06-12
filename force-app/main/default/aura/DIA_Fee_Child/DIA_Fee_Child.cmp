@@ -1,0 +1,82 @@
+<aura:component controller = "DIA_DispatchPageController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+	<!-- Aura Attribute for store single Contact[standard Object] Instance
+         And Store Index of Particular Instance --> 
+    <aura:attribute name="Fee_Instance" type="Fee__c"/>
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="dispatchInstance" type="object"/>
+    
+    <!-- Register 2 Lightning Event for handle add or Delete rows on Parent Component  --> 
+    <aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvent"/> 
+    <aura:registerEvent name="AddRowEvt" type="c:AddRowEvent"/> 
+    
+    <aura:attribute name="ObjectName" type="String" default="Delivery_instruction__c" access="global"/> <!-- Object Name as String-->
+    <aura:attribute name="StorageOperator" type="String" default="Storage_operator__c" access="global"/>  <!-- Field Name as String-->
+    <aura:attribute name="Storage" type="String" default="Storage__c" access="global"/> <!-- Field Name as String-->
+    <aura:attribute name="MarketArea" type="String" default="Market_Area__c" access="global"/> <!-- Field Name as String-->
+    <aura:attribute name="NetworkOperator" type="String" default="Network_Operator__c" access="global"/> <!-- Field Name as String-->
+    <aura:attribute name="StorageOperatorPicklist" type="String[]" />  <!-- Picklist Values of Rating__c Field -->
+    <aura:attribute name="StoragePicklist" type="String[]" />  <!-- Picklist Values of Locality__c Field -->
+    <aura:attribute name="MarketAreaPicklist" type="String[]" />  <!-- Picklist Values of Generic__c Field -->
+    <aura:attribute name="NetworkOperatorPicklist" type="String[]" />  <!-- Picklist Values of Generic__c Field -->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- Table Row -->   
+    <tr class="slds-text-title_caps">
+        <td> 
+            {!v.rowIndex + 1}
+        </td>        
+        <td>
+            <ui:inputSelect aura:id="InputFeeType" class="slds-input" value="{!v.Fee_Instance.Fee_Type__c}"/>
+            <!--<ui:inputText class="slds-input" value="{!v.DI_Instance.Storage_operator__c}"/>-->
+            <!--<lightning:select label="StorageOperator">
+                
+                <aura:iteration items="{!v.StorageOperatorPicklist}" var="val">
+                    <option value="{!val}"> {!val}</option>
+                </aura:iteration>
+            </lightning:select>-->
+        </td>
+        <td>
+            <ui:inputNumber aura:id="InputRate" class="slds-input" value="{!v.Fee_Instance.Rate__c}"/>
+            <!--<ui:inputText class="slds-input" value="{!v.DI_Instance.Storage__c}"/>-->
+        </td>
+        <td>
+            <ui:inputDate aura:id="InputStartDate" class="slds-input" value="{!v.Fee_Instance.Start_date__c}" displayDatePicker="true"/>
+            <!--<ui:inputPhone class="slds-input" value="{!v.DI_Instance.Market_Area__c}"/>-->
+        </td>
+        <td>
+            <ui:inputDate aura:id="InputEndDate" class="slds-input" value="{!v.Fee_Instance.End_date__c}" displayDatePicker="true"/>
+            <!--<ui:inputPhone class="slds-input" value="{!v.DI_Instance.Network_Operator__c}"/>-->
+        </td>
+        <td>
+            <ui:inputSelect aura:id="InputCurrency" value="{!v.Fee_Instance.CurrencyIsoCode}" class="slds-input"/>
+            <!--<ui:inputCurrency aura:id="InputCurrency" class="slds-input"/>
+            <ui:inputPhone class="slds-input" value="{!v.DI_Instance.Network_Operator__c}"/>-->
+        </td>
+        <td>
+            <ui:inputSelect aura:id="InputUnit" value="{!v.Fee_Instance.Unit__c}" class="slds-input"/>
+            <!--<ui:inputPhone class="slds-input" value="{!v.DI_Instance.Network_Operator__c}"/>-->
+        </td>
+        <td>
+            <ui:inputText aura:id="InputDescription" value="{!v.Fee_Instance.Description__c}" class="slds-input"/>
+            <!--<ui:inputPhone class="slds-input" value="{!v.DI_Instance.Network_Operator__c}"/>-->
+        </td>
+        <td>
+            <!-- conditionally Display Add or Delete Icons
+                 if rowIndex is 0 then show Add New Row Icon else show delete Icon
+             --> 
+            <aura:if isTrue="{!v.rowIndex == 0}">
+                <a onclick="{!c.AddNewRow}">
+                  <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                  <span class="slds-assistive-text">Add Icon</span>
+                </a>    
+              <aura:set attribute="else">
+                  <a onclick="{!c.removeRow}">
+                   <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                   <span class="slds-assistive-text">Delete Icon</span>
+                  </a>
+              </aura:set> 
+            </aura:if>
+        </td> 
+    </tr>
+</aura:component>

@@ -1,0 +1,112 @@
+<!-- 
+*   Name: DIA_DispatchPageDispatchComp
+*   Description : THis contains  nomination and transportaton details.
+*                 Dispatch object attribut is binded with DIA_DispatchPage compnent and all the sections input values will be 
+*                 accessible in DIA_DispatchPage comp and dispacth instruction record also gets creates in the DIA_DispatchPage
+*   Author : (Shridhar M)
+*
+*   History :
+*   VERSION     AUTHOR          DATE        DETAIL              UserStory/Req#
+*   1.0 -       Shridhar M      24/12/2020  INITIAL DEVELOPMENT
+-->
+
+<aura:component extends="c:DIA_BaseComponent" controller="DIA_DispatchPageController">
+    <!-- attributes -->
+    <aura:attribute name="dispatchObject" type="object" />
+    <aura:attribute name="regentRuleDisable" type="Boolean" default="false" />
+    <aura:attribute name="includesTransportation" type="Boolean" default="false" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="c-container">
+        <lightning:recordEditForm objectApiName="Dispatch_Instruction__c" recordId="{!v.dispatchObject.Id}">
+            <lightning:messages />
+            <!--Start -  Nomination deatils  -->
+            <div class="slds-page-header slds-p-left_medium slds-p-right_medium">
+                Nomination Deatils
+            </div>
+            <lightning:layout horizontalAlign="Spread" multipleRows="true">
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Nomination_Lead_Time__c"
+                        value="{!v.dispatchObject.NominationLeadTime}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Mode_of_Nomination__c"
+                        value="{!v.dispatchObject.ModeofNomination}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Edigas_Details__c"
+                        value="{!v.dispatchObject.EdigasDetails}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Nomination_Web_portal__c"
+                        value="{!v.dispatchObject.NominationWebPortal}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="12" largeDeviceSize="12">
+                    <lightning:inputField fieldName="Renomination__c" value="{!v.dispatchObject.Renomination}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="12" largeDeviceSize="12">
+                    <lightning:inputField fieldName="Allocations__c" value="{!v.dispatchObject.Allocations}" />
+                </lightning:layoutItem>
+
+                <br />
+                <br />
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Is_MultiMarket__c" 
+                        aura:Id="isMultiMarket" onchange="{!c.enableBox}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="12" largeDeviceSize="12">
+                    <lightning:inputField fieldName="Regent_Rules__c" value="{!v.dispatchObject.RegentRules}"
+                        disabled="{!!v.regentRuleDisable}" />
+                </lightning:layoutItem>
+            </lightning:layout>
+            <!--End -  Nomination deatils -->
+
+            <!--Start -  Transportation deatils -->
+            <div class="slds-page-header slds-p-left_medium slds-p-right_medium">
+                Transportation Deatils
+            </div>
+            <lightning:layout horizontalAlign="Spread" multipleRows="true">
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Includes_Transportation__c"
+                         aura:Id="includesTransportation"
+                        onchange="{!c.enableBox1}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Transport_Injection_Rate__c"
+                        value="{!v.dispatchObject.TransportInjectionRate}" disabled="{!!v.includesTransportation}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Transport_Withdrawal_Rate__c"
+                        value="{!v.dispatchObject.TransportWithdrawalRate}" disabled="{!!v.includesTransportation}" />
+                </lightning:layoutItem>
+            </lightning:layout>
+            <!--End -  Transportation__c deatils -->
+
+
+            <!-- <div class="slds-align_absolute-center" style="height:5rem">
+                <lightning:button variant="brand" type="submit" label="Save Dispatch" />
+            </div> -->
+        </lightning:recordEditForm>
+    </div>
+</aura:component>

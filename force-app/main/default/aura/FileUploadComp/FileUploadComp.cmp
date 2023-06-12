@@ -1,0 +1,36 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" controller="FileUploadController">
+    <aura:attribute name="filetype" type="List" default="['.png', '.jpg', '.jpeg', '.xlsx', ' .pdf', '.gif', '.js', '.xml']" />
+    <aura:attribute name="multiple" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="true" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="contIdlist" type="List" />
+    <aura:attribute name="columns" type="List" default="['Title', 'Id']" />
+    <aura:attribute name="dataList" type="List"/>
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <lightning:navigation aura:id="navService"/>
+    <lightning:button label="Navigate" onclick="{!c.handleClick}"/>
+    
+    <lightning:fileUpload label="Attach receipt"
+                          name="fileUploader"
+                          multiple="true"
+                          accept="{!v.filetype}"
+                          recordId="0010o00002cLxky"
+                          onuploadfinished="{!c.handleUploadFinished}" />
+    
+    <!-- overlayLibrary -->
+    <lightning:overlayLibrary aura:id="overlayLib" />
+    
+    <a onclick="{!c.openFile}">fiels name</a>
+    
+    <lightning:button label="Open a single file" onclick="{! c.openSingleFile }"/>
+  
+    <aura:if isTrue="{!!empty(v.dataList)}">
+        <lightning:datatable aura:id="contactsTable"
+                             class="slds-table- -fixed-layout scrollable branding-actions actionMenu" columns="{!v.columns}"
+                             data="{!v.dataList}" keyField="Id" hideCheckboxColumn="false" resizeColumnDisabled="true"
+                             sortedBy="Name" sortedDirection="asc" showRowNumberColumn="false" title="Attachments" onrowaction="{! c.handleRowAction }"/>
+    </aura:if>
+</aura:component>

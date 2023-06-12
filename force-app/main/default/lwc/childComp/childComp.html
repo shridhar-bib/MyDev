@@ -1,0 +1,18 @@
+<template>
+
+    <lightning-card title="HelloWorldChild" icon-name="custom:custom14">
+        <div>====Child component===</div>
+        <lightning-input value="test"></lightning-input>
+        <lightning-button label="clickMe" onclick={changeHandler} ></lightning-button>
+
+        <br />
+        =======message from parent
+        <b>
+            {messagefromparent}.
+        </b>
+
+        <br />
+        ========variable bound with parent==============
+        <lightning-input value={messagefromparent} onchange={chagetoparent}></lightning-input>
+    </lightning-card>
+</template>

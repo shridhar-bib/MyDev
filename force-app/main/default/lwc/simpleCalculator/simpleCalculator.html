@@ -1,0 +1,24 @@
+<template>
+    <lightning-card>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" padding="around-medium">
+                <lightning-input type="number" name="First Number"  label="First Number" onchange={numberChandeHandler}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-medium">
+                <lightning-input type="number" name="Second Number" label="Second Number" onchange={numberChandeHandler}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-medium">
+                <lightning-button-group >
+                    <lightning-button label="Add" icon-name="utility:add" icon-position="Right" onclick={addNumbers}></lightning-button>
+                    <lightning-button label="Substract" icon-name="utility:dash" icon-position="Right" onclick={substractNumbers}></lightning-button>
+                    <lightning-button label="Multiply" icon-name="utility:add" icon-position="Right" onclick={multiplicationNumbers}></lightning-button>
+                    <lightning-button label="Devide" icon-name="utility:add" icon-position="Right" onclick={devisionNumbers}></lightning-button>
+                </lightning-button-group>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="12" padding="around-medium">
+                <div>The Result is {currentResult}</div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>

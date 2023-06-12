@@ -1,0 +1,8 @@
+<aura:component implements="force:hasRecordId,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+     <aura:attribute name="ss" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+	<lightning:card>
+    this is simple component
+        =====<p>{!v.ss}</p>
+    </lightning:card>
+</aura:component>

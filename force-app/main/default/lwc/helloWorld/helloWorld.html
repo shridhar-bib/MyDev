@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="HelloWorld" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <p>Hello word comp</p>
+            <lightning-input label="Hello" value={greeting} onchange={changeHandler}></lightning-input>
+            <!-- <lightning-input label="Name12" value={greeting} ></lightning-input> -->
+        </div>
+        <br />
+        ==========variable bound with child=========
+        {messagetochild}==
+        <lightning-input label="messagetochild" value={messagetochild} onchange={onChangemessagetochild}></lightning-input>
+
+        ==========call child method=========
+        <lightning-button label="call child method" onclick={callChild}></lightning-button>
+
+    </lightning-card>
+    <lightning-card title="HelloWorld" icon-name="custom:custom14" style="padding-top:10px">
+        ===========================childcomp at last=====================
+        <c-child-comp onmyfirstevent={handleChildEvent} messagefromparent={messagetochild}></c-child-comp>
+    </lightning-card>
+</template>

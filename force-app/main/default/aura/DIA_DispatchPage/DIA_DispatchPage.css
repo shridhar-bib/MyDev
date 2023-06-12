@@ -1,0 +1,10 @@
+.THIS .slds-box {
+    border: 2px solid;
+    border-color: black;
+    font-size: x-large;
+    color: red;
+}
+.THIS .slds-accordion__summary{
+    background: #f3f2f2;
+    padding: 0.5%;
+}

@@ -1,0 +1,59 @@
+<aura:component controller = "DIA_DispatchPageController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!--Event handler for Add and Delete Row Event which is fire from Child Component -->  
+    
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvent" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddRowEvent" action="{!c.addNewRow}"/>
+    
+    <!--Aura Attribute for store Contact Object List as Array-->    
+    <aura:attribute name="FeeList" type="Fee__c[]"/> 
+    <aura:attribute name="dispatchID" type ="String"/>
+    <aura:attribute name="dispatchRecord" type ="Object"/>
+    
+    <!--<aura:handler name="change" value="{!v.dispatchID}" action="{!c.doInit}"/>-->
+      
+ <!--Table Part-->           
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate">S.No</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Fee Type">Fee Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Rate">Rate</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Start Date">Start Date</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="End Date">End date</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Currency">Currency</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Unit">Unit</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Description">Description</div>
+                </th>
+            </tr>
+        </thead>   
+        <tbody>
+           <!--Iterate the child Component for display Table rows 
+               with pass the List Item Index for track the Every child Component 
+               and pass each List Contact Instance -->         
+            <aura:iteration items="{!v.FeeList}" var="item" indexVar="index">
+                <c:DIA_Fee_Child Fee_Instance="{!item}" dispatchInstance="{!v.dispatchRecord}" rowIndex="{!index}" />
+            </aura:iteration>
+        </tbody>
+        
+    </table>
+    <div class="slds-clearfix slds-align_absolute-center" style="padding:10px;width: 20%;">
+        <lightning:button variant="brand" label="Save Fee" onclick="{!c.Save}"/>
+    </div>
+</aura:component>

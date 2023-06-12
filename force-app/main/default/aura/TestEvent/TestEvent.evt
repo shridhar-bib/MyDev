@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" access="global">
+
+<aura:attribute name="testData" type="String" />
+</aura:event>

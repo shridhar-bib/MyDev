@@ -1,0 +1,68 @@
+<!-- 
+*   Name: DIA_DispatchPageContactSearchComp
+*   Description : THis is a Child component of DIA_DispatchPageUsefulContactComp is used as search popup
+*   Author : (Shridhar M)
+*
+*   History :
+*   VERSION     AUTHOR          DATE        DETAIL              UserStory/Req#
+*   1.0 -       Shridhar M      24/12/2020  INITIAL DEVELOPMENT
+-->
+<aura:component extends="c:DIA_BaseComponent" controller="DIA_DispatchPageController">
+    <!-- attributes -->
+    <aura:attribute name="dispatchObject" type="object" />
+    <aura:attribute name="colFieldList" type="list" />
+    <aura:attribute name="fieldstoQuery" type="list" />
+    <aura:attribute name="reloadTable" type="String" />
+
+
+    <!-- datatable attributes -->
+    <aura:attribute name="columns" type="List" default="" />
+    <aura:attribute name="dataList" type="Object" />
+    <aura:attribute name="customSelectedRows" type="List" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+
+    <lightning:overlayLibrary aura:id="overlayLib" />
+
+    <!--spinner  -->
+    <lightning:spinner aura:id="searchContactSpinner" size="small" variant="brand" class="slds-hide" />
+
+
+    <lightning:recordEditForm objectApiName="Contact" recordId="" onsubmit="{!c.onSubmit}">
+        <lightning:layout horizontalAlign="Spread" multipleRows="true">
+            <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                mediumDeviceSize="6" largeDeviceSize="6">
+                <div class="custom-box">
+                    <lightning:inputField fieldName="AccountId" />
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                mediumDeviceSize="6" largeDeviceSize="6">
+                <div class="slds-align_absolute-center" style="height:5rem">
+                    <lightning:button variant="brand" type="submit" label="Search" />
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+
+    </lightning:recordEditForm>
+
+    <br />
+    <h1>Results...</h1>
+    <lightning:layout horizontalAlign="Spread" multipleRows="true">
+        <lightning:layoutItem flexibility="grow" size="12">
+            <aura:if isTrue="{!!empty(v.dispatchObject)}">
+                <lightning:datatable aura:id="contactsSearchTable"
+                    class="slds-table- -fixed-layout scrollable branding-actions actionMenu" columns="{!v.columns}"
+                    data="{!v.dataList}" keyField="Id" hideCheckboxColumn="false" resizeColumnDisabled="true"
+                    sortedBy="Name" sortedDirection="asc" showRowNumberColumn="false" />
+            </aura:if>
+            <!-- <lightning:datatable class="slds-table- -fixed-layout scrollable branding-actions actionMenu" data="{! v.dataList }" columns="{! v.columns }" keyField="id" hideCheckboxColumn="true"
+                    onrowselection="{! c.getSelectedName }" /> -->
+        </lightning:layoutItem>
+    </lightning:layout>
+
+    <div class="slds-align_absolute-center" style="height:5rem">
+        <lightning:button variant="brand" label="Add Selected Contacts" onclick="{!c.addSelected}" />
+    </div>
+</aura:component>

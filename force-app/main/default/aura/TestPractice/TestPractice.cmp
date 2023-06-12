@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" controller="TestPractice">
+
+<aura:attribute name="showValue" type="string" />
+
+<aura:handler name="doInit" value="{!this}" action="{!c.doinit}" />
+
+<aura:registerEvent name="testevent" type="c:TestEvent" />
+
+
+<lightning:card>
+    <lightning:input name="testinput" value="{!v.showValue}" />
+</lightning:card>
+
+</aura:component>

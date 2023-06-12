@@ -1,0 +1,160 @@
+<!-- 
+*   Name: DIA_DispatchPage
+*   Description : This is the container componenent
+*   Author : (Shridhar M)
+*
+*   History :
+*   VERSION     AUTHOR          DATE        DETAIL              UserStory/Req#
+*   1.0 -       Shridhar M      24/12/2020  INITIAL DEVELOPMENT
+-->
+
+<!--
+    Component details :- This is the container componenent, it is the main DIA page containing components 
+    like contrat, storage, dispatch, ( nomination and transporation), decline curves , additional details, delivery instruction,
+    Fee and usefull contact
+        Contact componet    - Contact will be created and id is passed to dispatch comopnent
+        Dispacth Component  - Dispatch object attribut is binded with this compnent and all the sections input values will be 
+                                accessible in DIA_DispatchPage comp and dispacth instruction record also gets creates in the DIA_DispatchPage.
+        Delivery component  - DIA id is passed to this compnent So that multiple delivery instruction are created for the same
+        Fee Component       - DIA id is passed to this compnent So that multiple fees are created for the same
+        Usefull Contact comp- DIA id is passed to this compnent and useful contacts(junction between contact and DIA) will be created
+    
+-->
+<aura:component extends="c:DIA_BaseComponent" controller="DIA_DispatchPageController"
+    implements="lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    access="global">
+
+    <!-- attributes -->
+    <aura:attribute name="contractRecord" type="Sobject" />
+    <aura:attribute name="contract" type="Sobject" />
+    <aura:attribute name="InternalParty" type="Sobject" />
+    <aura:attribute name="CounterParty" type="Sobject" />
+    <aura:attribute name="newContract" type="Boolean" default="false" />
+    <aura:attribute name="dispatchRecord" type="object" />
+
+    <!-- handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!--spinner  -->
+    <lightning:spinner aura:id="dispatchPageSpinner" size="small" variant="brand" class="slds-hide" />
+
+    <lightning:card>
+        <!-- Header section -->
+        <div class="slds-box slds-theme--warning slds-p-around_xx-small slds-page-header slds-text-align_center">
+            Dispatch Instruction For Gas Contracts</div>
+
+        <br />    
+        <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+            <lightning:recordViewForm recordId="{!v.dispatchRecord.Id}" objectApiName="Dispatch_Instruction__c">
+                <lightning:layout horizontalAlign="space" multipleRows="false" class="slds-p-around_medium">
+                    <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="6" mediumDeviceSize="3"
+                        largeDeviceSize="3">
+                        <div class="slds-text-heading--small"> <lightning:outputField fieldName="Name" /></div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="6" mediumDeviceSize="3"
+                        largeDeviceSize="3">
+                        <div class="slds-text-heading--small"><lightning:outputField fieldName="Status__c" /></div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="6" mediumDeviceSize="3"
+                        largeDeviceSize="3">
+                        <div class="slds-text-heading--small"><lightning:outputField fieldName="Opportunity__c" /></div>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="6" mediumDeviceSize="3"
+                        largeDeviceSize="3" >
+                        <lightning:button variant="brand" label="Submit For Approval"
+                            onclick="{!c.submitForApproval}" class="slds-float_right"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:recordViewForm>
+        </aura:if>
+        <!-- Accordion with sections -->
+        <lightning:accordion aura:id="accordion" activeSectionName="Contract" allowMultipleSectionsOpen="true">
+
+            <!-- Contract Details -->
+            <lightning:accordionSection name="Contract" label="Contract Details" class="">
+                <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                    <c:DIA_DispatchPageContractCmp contractRecord="{!v.dispatchRecord.ContractRecord}"
+                        dispatchRecord="{!v.dispatchRecord}" contractRecordId="{!v.dispatchRecord.Contract__c}" />
+                </aura:if>
+            </lightning:accordionSection>
+
+            <!-- Dispatch Instruction details -->
+            <lightning:accordionSection name="Dispatch Instructions" label="Dispatch Instructions">
+                <div class="slds-p-left_x-small">
+                    <lightning:accordion aura:id="accordion" activeSectionName="" allowMultipleSectionsOpen="true">
+
+                        <!-- StorageParameters -->
+                        <lightning:accordionSection name="StorageParameters" label="Storage Parameters">
+                            <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                                <c:DIA_DispatchPageStorageCmp aura:id="storageComponent"
+                                    dispatchObject="{!v.dispatchRecord}" />
+                            </aura:if>
+                        </lightning:accordionSection>
+
+                        <!-- Nomination-Transporation() -->
+                        <lightning:accordionSection name="Nomination-Transporation"
+                            label="Nomination/Transporation Details">
+                            <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                                <c:DIA_DispatchPageDispatchComp dispatchObject="{!v.dispatchRecord}" />
+                            </aura:if>
+                        </lightning:accordionSection>
+
+                        <!-- Decline Curves and gates -->
+                        <lightning:accordionSection name="DeclineCurvesAndGates" label="Decline Curves And Gates">
+                            <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                                <c:DIA_DispatchPageDeclineCurvesComp dispatchObject="{!v.dispatchRecord}" />
+                            </aura:if>
+                        </lightning:accordionSection>
+
+                        <!-- AdditionlDetails -->
+                        <lightning:accordionSection name="AdditionlDetails" label="Additionl Details">
+                            <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                                <c:DIA_DispatchPage_AdditionalDetails dispatchObject="{!v.dispatchRecord}" />
+                            </aura:if>
+                        </lightning:accordionSection>
+                    </lightning:accordion>
+                </div>
+
+                <!-- Button to save or update the dispatchdetails including storage, nomination, transportation, declinde 
+                                    curves and addinatin details -->
+                <div class="slds-align_absolute-center" style="height:5rem">
+                    <aura:if isTrue="{!empty(v.dispatchRecord.Id)}">
+                        <lightning:button variant="brand" label="Save Dispatch" onclick="{!c.saveDispatch}" />
+                        <aura:set attribute="else">
+                            <lightning:button variant="brand" label="Update Dispatch" onclick="{!c.saveDispatch}" />
+                        </aura:set>
+                    </aura:if>
+                </div>
+
+
+                <div class="slds-p-left_x-small">
+                    <lightning:accordion aura:id="accordion" activeSectionName="" allowMultipleSectionsOpen="true">
+
+                        <!-- Delivery Instruction -->
+                        <lightning:accordionSection name="DeliveryInstruction" label="Delivery Instruction">
+                            <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                                <c:DIA_DeliveryInstruction dispatchID="{!v.dispatchRecord.Id}" />
+                            </aura:if>
+                        </lightning:accordionSection>
+
+                        <!-- Fee -->
+                        <lightning:accordionSection name="Fee" label="Fee">
+                            <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                                <c:DIA_Fee dispatchID="{!v.dispatchRecord.Id}" dispatchRecord="{#v.dispatchRecord}"/>
+                            </aura:if>
+                        </lightning:accordionSection>
+
+                    </lightning:accordion>
+                </div>
+            </lightning:accordionSection>
+
+            <!-- Useful Contacts -->
+            <lightning:accordionSection name="Useful Contacts" label="Useful Contacts">
+                <aura:if isTrue="{!!empty(v.dispatchRecord)}">
+                    <c:DIA_DispatchPageUsefulContactComp dispatchObject="{!v.dispatchRecord}" />
+                </aura:if>
+            </lightning:accordionSection>
+
+        </lightning:accordion>
+    </lightning:card>
+</aura:component>

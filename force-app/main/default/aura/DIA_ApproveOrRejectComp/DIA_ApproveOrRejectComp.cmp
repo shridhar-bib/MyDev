@@ -1,0 +1,40 @@
+<!-- 
+*   Name: DIA_ApproveOrRejectComp
+*   Description : This compnent usedin quickaction to apporve or reject the DIA.
+*   Author : (Shridhar M)
+*
+*   History :
+*   VERSION     AUTHOR          DATE        DETAIL              UserStory/Req#
+*   1.0 -       Shridhar M      13/01/2021  INITIAL DEVELOPMENT
+-->
+<aura:component extends="c:DIA_BaseComponent" implements="force:hasRecordId,force:lightningQuickAction"
+    controller="DIA_DispatchPageController">
+
+    <aura:attribute name="comments" type="String" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!--spinner  -->
+    <lightning:spinner aura:id="approveRejectSpinner" size="small" variant="brand" class="slds-hide" />
+
+    <div class="c-container slds-p-left_small slds-p-right_small ">
+        <br />
+        <lightning:layout horizontalAlign="spread" multipleRows="true">
+            <lightning:layoutItem flexibility="grow" size="12" smallDeviceSize="12"
+                mediumDeviceSize="12" largeDeviceSize="12">
+                <div class=" ">
+                    <lightning:textarea name="Comments" label="Comments" value="{!v.comments}"/>
+                </div>
+                <br />
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="grow" size="12">
+                <div class="slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
+                    <lightning:button class="" variant="brand" label="Approve" onclick="{!c.handleApprove}" />
+                    <lightning:button class="" variant="destructive" label="Reject1" onclick="{!c.handleReject}" />
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <br />
+    </div>
+</aura:component>

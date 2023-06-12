@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction,lightning:isUrlAddressable" access="global" >
+      <lightning:navigation aura:id="claimActionNavigate" />
+	<lightning:unsavedChanges aura:id="unsaved"
+                              onsave="{!c.handleSave}"
+                              ondiscard="{!c.handleDiscard}" />
+    <lightning:button label="Make Unsaved Changes" onclick="{!c.makeUnsavedChanges}" />
+    <lightning:button label="Clear Unsaved Changes" onclick="{!c.clearUnsavedChanges}" />
+    <lightning:button label="cancel" onclick="{!c.cancelHelper}" />
+</aura:component>

@@ -1,0 +1,17 @@
+<aura:component extends="c:DIA_BaseComponent">
+    <aura:attribute name="dispatchObject" type="object" />
+
+    <div class="c-container slds-p-left_medium">
+        <lightning:recordEditForm objectApiName="Dispatch_Instruction__c" recordId="{!v.dispatchObject.Id}">
+
+            <lightning:layout horizontalAlign="Spread" multipleRows="true">
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="12" largeDeviceSize="12">
+                    <lightning:inputField fieldName="Decline__c" value="{!v.dispatchObject.Decline}"/>
+                </lightning:layoutItem>
+
+            </lightning:layout>
+        </lightning:recordEditForm>
+    </div>
+</aura:component>

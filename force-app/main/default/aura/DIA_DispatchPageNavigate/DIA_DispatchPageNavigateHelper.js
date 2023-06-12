@@ -1,0 +1,6 @@
+({
+    domainUrl: '',
+    helperMethod : function() {
+
+    }
+})

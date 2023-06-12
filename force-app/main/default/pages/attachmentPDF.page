@@ -1,0 +1,38 @@
+<apex:page cache="true" contentType="application/vnd.ms-excel#FullDeliveryReport.xls" showHeader="false" sidebar="false" standardStylesheets="false">
+    
+    <style>
+        th,td {
+        text-align: left;
+        }
+    </style>
+    <div style=" overflow: auto;">
+        <table border="2" class="slds-scrollable_x slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered"
+               aria-labelledby="element-with-table-label other-element-with-table-label">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="generalInformation" colspan="3">
+                        <div class="slds-truncate slds-align_absolute-center" title="General Information">General Information
+                        </div>
+                    </th>
+                    <th class="summary" colspan="14">
+                        <div class="slds-truncate slds-align_absolute-center" title="Summary">Summary</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+               
+                    <tr class="slds-hint-parent">
+                        <td>
+                            <div class="" title="">test</div>
+                        </td>
+                        <td>
+                            <div class="" title="">test</div>
+                        </td>
+                      
+                    </tr>
+               
+            </tbody>
+        </table>
+    </div>
+    
+</apex:page>

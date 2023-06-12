@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickAction" >
+	this is test component
+    <lightning:button onclick="{!c.test}" name="click me" label="click me.."></lightning:button>
+</aura:component>

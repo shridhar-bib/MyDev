@@ -1,0 +1,145 @@
+<aura:component extends="c:DIA_BaseComponent" controller="DIA_DispatchPageController">
+    <!-- attributes -->
+    <aura:attribute name="dispatchObject" type="object" />
+    <aura:attribute name="storageObject" type="object" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="c-container">
+        <lightning:recordEditForm aura:id="dispatchRecordForm" objectApiName="Dispatch_Instruction__c"
+            recordId="{!v.dispatchObject.Id}" onsubmit="{!c.onSubmit}" onsuccess="{!c.onSuccess}"
+            onerror="{!c.onError}">
+
+
+            <lightning:layout horizontalAlign=" Spread" multipleRows="true">
+                <lightning:messages />
+                <!--Start -  Storage deatils  -->
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Storage_Operator__c" value="{!v.dispatchObject.StorageOperator}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Facility_Name__c" value="{!v.dispatchObject.FacilityName}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Working_Gas_Unit__c" value="{!v.dispatchObject.WorkingGasUnit}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="0"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Working_Gas_Volume__c"
+                        value="{!v.dispatchObject.WorkingGasVolume}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12" mediumDeviceSize="6"
+                    largeDeviceSize="6">
+                    <lightning:inputField fieldName="Injection_Rate__c" value="{!v.dispatchObject.InjectionRate}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Additional_Gas_Volume__c"
+                        value="{!v.dispatchObject.AdditionalGasVolume}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Withdrawal_Rate__c" value="{!v.dispatchObject.WithdrawalRate}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Storage_Maintenance__c"
+                        value="{!v.dispatchObject.StorageMaintenance}" />
+                </lightning:layoutItem>
+            </lightning:layout>
+
+            <!--Start -  Interruptible deatils  -->
+            <div class="slds-page-header slds-p-left_medium slds-p-right_medium">
+                Interruptible Deatils
+            </div>
+            <lightning:layout horizontalAlign="Spread" multipleRows="true">
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Interruptible_Working_Gas_Volume__c"
+                        value="{!v.dispatchObject.InterruptibleWorkingGasVolume}"
+                        disabled="{!!or(equals(v.dispatchObject.capacityType, 'Interruptible'), equals(v.dispatchObject.capacityType, 'Both'))}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="0"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Interruptible_Injection_Rate__c"
+                        value="{!v.dispatchObject.InterruptibleInjectionRate}"
+                        disabled="{!!or(equals(v.dispatchObject.capacityType, 'Interruptible'), equals(v.dispatchObject.capacityType, 'Both'))}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField fieldName="Interruptible_Withdrawal_Rate__c"
+                        value="{!v.dispatchObject.InterruptibleWithdrawalRate}"
+                        disabled="{!!or(equals(v.dispatchObject.capacityType, 'Interruptible'), equals(v.dispatchObject.capacityType, 'Both'))}" />
+                </lightning:layoutItem>
+            </lightning:layout>
+
+            <!--Start -  Additional Capacity Booking Details -->
+            <div class="slds-page-header slds-p-left_medium slds-p-right_medium">
+                Additional Capacity Booking Details
+            </div>
+            <lightning:layout horizontalAlign="Spread" multipleRows="true">
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField aura:id="Instruction_of_extra_storage"
+                        fieldName="Instruction_of_extra_storage__c"
+                        value="{!v.dispatchObject.InstructionOfExtraStorage}"
+                        disabled="{!!equals(v.dispatchObject.ExtraStorageCapacityBookings, 'Yes')}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <label for="AdditionalCapacityInstrForDayAhead" class="slds-form-element__label">Additional
+                        Capacity Instructions For Day Ahead</label>
+                    <lightning:inputField aura:id="AdditionalCapacityInstrForDayAhead"
+                        fieldName="Additional_Capacity_Instr_For_Day_Ahead__c"
+                        value="{!v.dispatchObject.AdditionalCapacityInstrForDayAhead}"
+                        disabled="{!!equals(v.dispatchObject.ExtraStorageCapacityBookings, 'Yes')}"
+                        variant="label-hidden" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <lightning:inputField aura:id="Instruction_for_extra_transport_capacity"
+                        fieldName="Instruction_for_extra_transport_capacity__c"
+                        value="{!v.dispatchObject.InstructionForExtraTransportCapacity}"
+                        disabled="{!!equals(v.dispatchObject.ExtraStorageCapacityBookings, 'Yes')}" />
+                </lightning:layoutItem>
+
+                <lightning:layoutItem flexibility="grow" padding="horizontal-medium" size="12" smallDeviceSize="12"
+                    mediumDeviceSize="6" largeDeviceSize="6">
+                    <label for="AdditionalCapacityInstrForWithinDay" class="slds-form-element__label">Additional
+                        Capacity Instructions For Within Day</label>
+                    <lightning:inputField aura:id="AdditionalCapacityInstrForWithinDay"
+                        fieldName="Additional_Capacity_Instr_For_Within_Day__c"
+                        value="{!v.dispatchObject.AdditionalCapacityInstrForWithinDay}"
+                        disabled="{!!equals(v.dispatchObject.ExtraStorageCapacityBookings, 'Yes')}"
+                        variant="label-hidden" />
+                </lightning:layoutItem>
+
+            </lightning:layout>
+            <!--End -  Transportation__c deatils -->
+
+
+            <!-- <div class="slds-align_absolute-center" style="height:5rem">
+                <lightning:button variant="brand" type="submit" label="Save Dispatch" />
+            </div> -->
+        </lightning:recordEditForm>
+    </div>
+</aura:component>

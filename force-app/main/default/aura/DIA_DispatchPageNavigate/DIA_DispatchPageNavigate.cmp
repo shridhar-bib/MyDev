@@ -1,0 +1,22 @@
+<!-- 
+*   Name: DIA_DispatchPageNavigate
+*   Description : This is used in quickaction to navigate to dispatch page
+*   Author : (Shridhar M)
+*
+*   History :
+*   VERSION     AUTHOR          DATE        DETAIL              UserStory/Req#
+*   1.0 -       Shridhar M      24/12/2020  INITIAL DEVELOPMENT
+-->
+<aura:component extends="c:DIA_BaseComponent"
+    implements="force:hasSObjectName,lightning:actionOverride,lightning:isUrlAddressable,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="dispatch" type="object" />
+
+    <lightning:navigation aura:id="navService" />
+    
+    <aura:if isTrue="{!!empty(v.dispatch)}">
+        Dispatch for this opportunity is already created
+        <a onclick="{!c.navigateToDispacthForm}" class="slds-text-heading_small">{!v.dispatch.Name}.</a>
+    </aura:if>
+</aura:component>

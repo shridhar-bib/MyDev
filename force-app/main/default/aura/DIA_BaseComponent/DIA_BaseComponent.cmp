@@ -1,0 +1,19 @@
+<!-- 
+*   Name: DIA_BaseComponent
+*   Description : This is the an utility component, can be extended 
+*                   and use the common methods without wrintng apex code evry time
+*   Author : (Shridhar M)
+*
+*   History :
+*   VERSION     AUTHOR          DATE        DETAIL              UserStory/Req#
+*   1.0 -       Shridhar M      24/12/2020  INITIAL DEVELOPMENT
+-->
+
+<aura:component controller="DIA_BaseController" abstract="true">
+
+    <!-- handers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    {!v.body}
+
+</aura:component>

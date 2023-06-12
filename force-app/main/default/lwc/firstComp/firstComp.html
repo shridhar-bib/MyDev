@@ -1,0 +1,11 @@
+<template>
+
+    <template if:true={itsTrue} >
+        Yes its true
+        <template if:false={itsTrue}>
+            Yes its false
+        </template>
+        <br />
+        {firstAttribute}
+    </template>
+</template>

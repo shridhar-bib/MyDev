@@ -1,0 +1,65 @@
+<!-- 
+*   Name: DIA_DispatchPageUsefulContactComp
+*   Description : This is usefull section compnent where contact can be searched and added or deleted and also 
+*                  new contact can be created.
+*                   Child component DIA_DispatchPageContactSearchComp is used for search popup
+*   Author : (Shridhar M)
+*
+*   History :
+*   VERSION     AUTHOR          DATE        DETAIL              UserStory/Req#
+*   1.0 -       Shridhar M      24/12/2020  INITIAL DEVELOPMENT
+-->
+<aura:component extends="c:DIA_BaseComponent" controller="DIA_DispatchPageController">
+    <!-- attributes -->
+    <aura:attribute name="dispatchObject" type="object" />
+
+    <!-- datatable attributes -->
+    <aura:attribute name="columns" type="List" default="" />
+    <aura:attribute name="dataList" type="Object" />
+    <aura:attribute name="customSelectedRows" type="List" />
+
+    <!-- child component attributes -->
+    <aura:attribute name="contactFieldListForCreateForm" type="List" />
+    <aura:attribute name="colFieldsForSearcTable" type="List" />
+    <aura:attribute name="fieldstoQuery" type="List" />
+    <aura:attribute name="reloadTable" type="String" default=""
+        description="used to just reload the datatable on click of save on modal" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.reloadTable}" action="{!c.refreshView}" />
+
+    <!-- overlayLibrary -->
+    <lightning:overlayLibrary aura:id="overlayLib" />
+
+    <!--spinner  -->
+    <lightning:spinner aura:id="addContactSpinner" size="small" variant="brand" class="slds-hide" />
+
+    <div class="c-container slds-p-left_medium slds-p-right_medium ">
+        <br />
+        <lightning:layout horizontalAlign="spread" multipleRows="true">
+            <lightning:layoutItem flexibility="grow" size="12">
+                <div class="slds-p-left_medium slds-p-right_medium slds-align_absolute-center">
+                    <lightning:button class="" variant="brand" label="Add Contacts"
+                        onclick="{!c.handleSearchContactButton}" />
+                    <lightning:button class="" variant="brand" label="Remove Contacts"
+                        onclick="{!c.handleRemoveContactButton}" />
+                    <lightning:button class="" variant="brand" label="Add New Contact"
+                        onclick="{!c.handleAddContactButton}" />
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <br />
+
+        <lightning:layoutItem flexibility="grow" size="12">
+            <aura:if isTrue="{!!empty(v.dispatchObject)}">
+                <lightning:datatable aura:id="contactsTable"
+                    class="slds-table- -fixed-layout scrollable branding-actions actionMenu" columns="{!v.columns}"
+                    data="{!v.dataList}" keyField="Id" hideCheckboxColumn="false" resizeColumnDisabled="true"
+                    sortedBy="Name" sortedDirection="asc" showRowNumberColumn="false" title="Useful Contacts" />
+            </aura:if>
+            <!-- <lightning:datatable class="slds-table- -fixed-layout scrollable branding-actions actionMenu" data="{! v.dataList }" columns="{! v.columns }" keyField="id" hideCheckboxColumn="true"
+                onrowselection="{! c.getSelectedName }" /> -->
+        </lightning:layoutItem>
+    </div>
+</aura:component>

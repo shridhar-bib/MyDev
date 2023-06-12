@@ -1,0 +1,67 @@
+<aura:component controller="DIA_DispatchPageController"
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+    access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	
+    <!--Aura Attribute for store Contact Object List as Array-->
+    <aura:attribute name="deliveryInstructionList" type="Delivery_instruction__c[]" />
+    <aura:attribute name="dispatchID" type="String" />
+    
+    <!--Event handler for Add and Delete Row Event which is fire from Child Component -->
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvent" action="{!c.removeDeletedRow}" />
+    <aura:handler name="AddRowEvt" event="c:AddRowEvent" action="{!c.addNewRow}" />
+    <aura:handler name="change" value="{!v.dispatchID}" action="{!c.doInit}"/>
+	
+    <div class="slds-page-header">
+        <h1 class="slds-page-header__title">Delivery instruction</h1>
+    </div>
+
+    <!--Table Part-->
+    
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+                        <div class="slds-truncate">S.No</div>
+                    </th>
+                    <!--<th scope="col">
+                    <div class="slds-truncate" title="Storage Operator">Storage Operator</div>
+                </th>-->
+                    <th scope="col">
+                        <div class="slds-truncate" title="Market Area">Market Area</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Network Operator">Network Operator</div>
+                    </th>
+
+                    <th scope="col">
+                        <div class="slds-truncate" title="Storage">Facility</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Entry">Network Entry ID(Prisma)</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Exit">Network Exit ID(Prisma)</div>
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <!--Iterate the child Component for display Table rows 
+               with pass the List Item Index for track the Every child Component 
+               and pass each List Contact Instance -->
+                <aura:iteration items="{!v.deliveryInstructionList}" var="item" indexVar="index">
+                    <c:DIA_DeliveryInstruction_Child DI_Instance="{!item}" rowIndex="{!index}" />
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+        <div class="slds-clearfix slds-align_absolute-center" style="padding:10px;width: 20%;">
+            <lightning:button variant="brand" label="Save Delivery Instruction" onclick="{!c.Save}" />
+        </div>
+        
+        <table>
+            <c:DIA_ShipperCode dispatchID="{!v.dispatchID}"/>
+        </table>
+    
+</aura:component>
