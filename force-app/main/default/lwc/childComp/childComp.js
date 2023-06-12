@@ -23,7 +23,7 @@ export default class ChildComp extends LightningElement {
         alert('i am child method');
     }
 
-    // ========================lifecycle hooks========================================
+    // 234========================lifecycle hooks========================================
     constructor() {
         super();
         //alert('child constructore');
