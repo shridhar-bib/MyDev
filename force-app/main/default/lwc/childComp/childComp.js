@@ -7,7 +7,7 @@ export default class ChildComp extends LightningElement {
     @api recordId = '0010o000032ev4MAAQ';
     @api messagefromparent;
 
-    // ========================event=====================================================
+    // 123========================event=====================================================
     changeHandler(event) {
         const eve = new CustomEvent('myfirstevent', { detail: { value: this.messagefromparent } });
         this.dispatchEvent(eve);
